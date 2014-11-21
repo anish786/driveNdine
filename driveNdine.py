@@ -8,7 +8,7 @@ from pygeocoder import Geocoder
 
 
 
-def getRestaurants(infileName):
+def getRestaurants():
 	restaurants = []
 
 	inFileName='restaurants.json'
@@ -48,23 +48,32 @@ def distanceBetween(x1, y1, x2, y2):
 
 #convert to radians
 
-	R = 6373.0
+	R = 3963.1676
 
 	lat1 = math.radians(x1)
 	lon1 = math.radians(x2)
 	lat2 = math.radians(y1)
 	lon2 = math.radians(y2)
 
-	dlon = lon2 - lon1
-	dlat = lat2 - lat1
+	#dlon = lon2 - lon1
+	#dlat = lat2 - lat1
 
-	a = (math.sin(dlat/2))**2 + math.cos(lat1) * math.cos(lat2)*(math.sin(dlon/2))**2
-	c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+	#a = math.pow((math.sin(dlat/2)), 2) + math.cos(lat1) * math.cos(lat2)*math.pow((math.sin(dlon/2)), 2)
+	#c = 2 * math.asin(math.sqrt(a))
 
-	distance = R * c
+	#distance = R * c
 
-	return distance
+	 # convert decimal degrees to radians 
+    	#lon1, lat1, lon2, lat2 = map(math.radians, [lon1, lat1, lon2, lat2])
 
+   	# haversine formula 
+    	dlon = lon2 - lon1 
+    	dlat = lat2 - lat1 
+    	a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+    	c = 2 * math.asin(math.sqrt(a))
+
+	mi = R * c
+	return mi
 
 def measureSpots(lat1, long1, lat2, long2, n):
 	#using a linear approximation, return n points equally spaced on a straight line between the start and destination
@@ -85,9 +94,9 @@ def getInitialList(restaurants, trip):
 	startLong = startGPS[1]
 	goalLat = goalGPS[0]
 	goalLong = goalGPS[1]
-
+	
 	tripDistance = distanceBetween(startLat, startLong, goalLat, goalLong)
-	numberOfSpots = floor(tripDistance/20)
+	numberOfSpots =  int(math.floor(tripDistance/20))
 
 	spots = measureSpots(startLat, startLong, goalLat, goalLong, numberOfSpots)
 
@@ -98,10 +107,11 @@ def getInitialList(restaurants, trip):
 		currLong = restaurants[i]["longitude"]
 
 		if(distanceBetween(startLat, startLong, currLat, currLong) > tripDistance):
+			#print "Distance between 			
 			continue
 
 		for j in range(0, len(spots)):
-			if(distanceBetween(currLat, currLong, spots[j][0], spots[j][1]) < 30):
+			if(distanceBetween(currLat, currLong, spots[j][0], spots[j][1]) < 50):
 				initialRests.append(restaurants[i])
 				break
 
@@ -159,23 +169,20 @@ def ranker(initialRests, trip):
 
 
 
-
-
-
-
-addr1 = ""
-addr2 = ""
+# For testing:
+addr1 = "Phoenix, AZ"
+addr2 = "De Forest, WI"
 
 trip = []
 trip.append(addr1)
 trip.append(addr2)
 
-
-
 restaurants = getRestaurants()
+print str(len(restaurants))
 initialList = getInitialList(restaurants, trip)
 recommendedPlaces = ranker(initialList, trip)
 
+print str(len(recommendedPlaces))
 
 
 
