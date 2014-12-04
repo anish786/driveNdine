@@ -117,24 +117,3 @@ def finalTen(filtered_set, trip):
 		final_ten = final_ten[0:10] 
 
 	return final_ten 			
-
-# For testing:
-addr1 = "Phoenix, AZ"
-addr2 = "Flagstaff, AZ"
-trip = [addr1, addr2]
-
-start_lat, start_lon = addressToCoordinates(addr1)
-dest_lat, dest_lon = addressToCoordinates(addr2)
-trip_coord = [start_lat, start_lon, dest_lat, dest_lon]
-
-print str(trip)
-
-restaurants = getRestaurants()
-print str(len(restaurants))
-
-initialList = filterRestaurants(restaurants, trip_coord)
-print str(len(initialList))
-
-recommendedPlaces = finalTen(initialList, trip)
-print str(len(recommendedPlaces))
-
