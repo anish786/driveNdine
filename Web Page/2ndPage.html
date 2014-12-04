@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head class="map_canvas">
+	<title></title>
+	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script src="gmaps-master/gmaps.js"></script>
+
+	<style type="text/css">
+
+	.map_canvas {
+
+		height: 350px;
+		width: 96%;
+		margin-left: 2%;
+		margin-top: 1%;
+		margin-bottom: 20px;
+
+	}
+
+	#map {
+		height: 350px;
+		width: 96%;
+		margin-left: 2%;
+		margin-top:1%;
+		margin-bottom: 20px;
+	}
+
+	#results {
+
+		height: 300px;
+		width: 96%;
+		margin-left: 2%;
+		background-color: white;
+		color: black;
+		overflow: auto;
+		font-size: 120%;
+	}
+	
+	body {
+		background-image: url("asphault_plain.jpg");
+		background-color: #cccccc;
+		color: white;
+	}
+	
+	
+	</style>
+  
+</head>
+<body>
+	<div id="map"></div>
+	
+	<script>
+	
+	var map = new GMaps({
+		el: '#map',
+		lat: -12.043333,
+		lng: -77.028333
+	});
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.03,
+		title: 'Lima',
+		details: {
+		database_id: 42,
+		author: 'HPNeo'
+	},
+	click: function(e){
+		if(console.log)
+			console.log(e);
+		alert('You clicked in this marker');
+	},
+	mouseover: function(e){
+		if(console.log)
+			console.log(e);
+		}
+	});
+	map.addMarker({
+		lat: -12.042,
+		lng: -77.028333,
+		title: 'Marker with InfoWindow',
+		infoWindow: {
+		content: '<p>HTML Content</p>'
+		}
+	});
+	map.drawRoute({
+		origin: [-12.044012922866312, -77.02470665341184],
+		destination: [-12.090814532191756, -77.02271108990476],
+		travelMode: 'driving',
+		strokeColor: '#131540',
+		strokeOpacity: 0.6,
+		strokeWeight: 6
+	});
+	map.addMarker({
+		lat: -12.044012922866312,
+		lng: -77.02470665341184,
+		title: 'Marker with InfoWindow',
+		infoWindow: {
+		content: '<p>HTML Content</p>'
+		}
+	});
+	
+	</script>
+	
+	<script>
+	function myFunction() {
+		document.getElementById("results").style.outline = "thick solid #000000";
+	}
+	</script>
+
+	<div id="results">
+
+		<table style="width:96%;">
+			<tr>
+				<td>Jill</td>
+				<td>Smith</td> 
+				<td>50</td>
+			</tr>
+			<tr>
+				<td>Eve</td>
+				<td>Jackson</td> 
+				<td>94</td>
+			</tr>
+		</table>
+
+	</div>
+</body>
+
+</html>
