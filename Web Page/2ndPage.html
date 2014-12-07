@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <head class="map_canvas">
 	<title></title>
-	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script src="gmaps-master/gmaps.js"></script>
 
 	<style type="text/css">
@@ -32,7 +33,33 @@
 		background-color: white;
 		color: black;
 		overflow: auto;
-		font-size: 120%;
+	}
+	
+	#results1 {
+	
+		margin-top: 20px;
+		margin-left: 5px;
+		margin-bottom: 0px;
+		color: black;
+	
+	}
+	
+	#results2 {
+	
+		margin-top: 0px;
+		margin-left: 40px;
+		margin-bottom: 0px;
+		color: black;
+	
+	}
+	
+	#results3 {
+	
+		margin-top: 0px;
+		margin-left: 40px;
+		margin-bottom: 40px;
+		color: black;
+	
 	}
 	
 	body {
@@ -45,42 +72,128 @@
 	</style>
   
 </head>
+
 <body>
 	<div id="map"></div>
 	
 	<script>
 	
-	var map = new GMaps({
+	var map;
+	$(document).ready(function(){
+		map = new GMaps({
 		el: '#map',
 		lat: -12.043333,
 		lng: -77.028333
 	});
+	
 	map.addMarker({
-		lat: -12.043333,
-		lng: -77.03,
-		title: 'Lima',
-		details: {
-		database_id: 42,
-		author: 'HPNeo'
-	},
-	click: function(e){
-		if(console.log)
-			console.log(e);
-		alert('You clicked in this marker');
-	},
-	mouseover: function(e){
-		if(console.log)
-			console.log(e);
-		}
-	});
-	map.addMarker({
-		lat: -12.042,
-		lng: -77.028333,
+		lat: -12.044012922866312,
+		lng: -77.02470665341184,
 		title: 'Marker with InfoWindow',
 		infoWindow: {
-		content: '<p>HTML Content</p>'
-		}
+          content: '<p>Source</p>'
+        }
 	});
+	
+	map.addMarker({
+		lat: -12.090814532191756,
+		lng: -77.02271108990476,
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Destination</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.090814532191756,
+		lng: -77.02271108990476,
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
+	map.addMarker({
+		lat: -12.043333,
+		lng: -77.028333
+		title: 'Marker with InfoWindow',
+        infoWindow: {
+          content: '<p>Restaurant</p>'
+        }
+	});
+	
 	map.drawRoute({
 		origin: [-12.044012922866312, -77.02470665341184],
 		destination: [-12.090814532191756, -77.02271108990476],
@@ -88,15 +201,10 @@
 		strokeColor: '#131540',
 		strokeOpacity: 0.6,
 		strokeWeight: 6
+		});
 	});
-	map.addMarker({
-		lat: -12.044012922866312,
-		lng: -77.02470665341184,
-		title: 'Marker with InfoWindow',
-		infoWindow: {
-		content: '<p>HTML Content</p>'
-		}
-	});
+	
+	
 	
 	</script>
 	
@@ -108,18 +216,55 @@
 
 	<div id="results">
 
-		<table style="width:96%;">
-			<tr>
-				<td>Jill</td>
-				<td>Smith</td> 
-				<td>50</td>
-			</tr>
-			<tr>
-				<td>Eve</td>
-				<td>Jackson</td> 
-				<td>94</td>
-			</tr>
-		</table>
+		<p id='results1'> 1. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 2. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 3. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 4. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 5. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 6. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 7. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 8. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 9. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
+		
+		<p id='results1'> 10. This should be the first ranked restaurant on this line right here. </p>
+		<p id='results2'> On this line we would put the address of the restaurant </p>
+		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
+		<p id='results3'> On this line we would put the yelp rating.</p>
 
 	</div>
 </body>
