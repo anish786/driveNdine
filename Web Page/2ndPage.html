@@ -34,14 +34,14 @@
 		margin-left: 2%;
 		background-color: white;
 		color: black;
-		overflow: auto;
+		overflow: auto;;
 	}
 	
 	#results1 {
 	
 		margin-top: 10px;
 		margin-left: 10px;
-		margin-bottom: 10px;
+		margin-bottom: 0px;
 		color: black;
 	
 	}
@@ -64,9 +64,37 @@
 	
 	}
 	
+	.hidden {
+	
+		display: none;
+	
+	}
+	
 	body {
 		background-image: url("asphault_plain.jpg");
 		background-color: #cccccc;
+	}
+	
+	.textStuff {
+	
+		width: 48%;
+		display: inline-block;
+	
+	}
+	
+	.submit_button {
+	
+		width: 20%;
+		margin-left: 25%;
+	
+	}
+	
+	.buttons{
+	
+		display: inline-block;
+		width: 48%;
+		height: 20px;
+	
 	}
 	
 	.Search_button{
@@ -240,57 +268,180 @@
 	<div id='map'></div>
 
 	<div id="results">
-
+	
+		<div class='textStuff'>
 		<p id='results1'> 1. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 2. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 3. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 4. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 5. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 6. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 7. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 8. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 9. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
 		
 		<p id='results1'> 10. This should be the first ranked restaurant on this line right here. </p>
 		<p id='results2'> On this line we would put the address of the restaurant </p>
+		</div>
+		
+		<div class='buttons'>
+		
+			<form action='/cgi-bin/third.py' method='post'> 
+				<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>
+				<input class='submit_button' type='submit' value='Eat Here!'>
+			</form>
+			
+		</div>
+		
+		<div class='textStuff'>
 		<p id='results2'> On this line we would put the additional time needed to drive here. </p>
 		<p id='results3'> On this line we would put the yelp rating.</p>
-
+		
+		</div>
+		
 	</div>
 	
 	<form class='back' action='cgi-bin/drivendine.py' method='post'>
