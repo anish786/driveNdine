@@ -38,8 +38,8 @@ def distanceBetween(start_lat, start_lon, dest_lat, dest_lon):
 	start_lat, start_lon, dest_lat, dest_lon = map(radians, [start_lat, start_lon, dest_lat, dest_lon])
 	dlon = dest_lon - start_lon
 	dlat = dest_lat - start_lat
-	a = sin(dlat/2)**2 + cos(start_lat) * cos(dest_lat) * sin(dlon/2)**2
-	c = 2 * atan2(sqrt(a), sqrt(1-a)) 
+	a = sin(dlat/2.0)**2 + cos(start_lat) * cos(dest_lat) * sin(dlon/2.0)**2
+	c = 2.0 * atan2(sqrt(a), sqrt(1.0-a)) 
 	R = 3963.1676						#radius of Earth, in miles	
 	mi = R * c
 	return mi  
@@ -59,7 +59,7 @@ def getDistanceScore(rest, trip_coord):
 	return score
 
 def getTimeScore(rest, trip):
-	#need to add code to make sure that travelTime function only receives known restAddress
+	#travelTime function only receives known restAddress
 	rest_address = rest["full_address"]	
 	
 	try:
@@ -70,8 +70,10 @@ def getTimeScore(rest, trip):
 	except:
 		return -1		
 
-	score = (1.0 - (additional_time/trip_time))
-	return score
+	if (additional_time >= trip_time):
+		return 0.0
+	else:
+		return (1.0 - (additional_time/trip_time))
 
 def getStarScore(restaurant):
 #get the restaurant's rating from its dictionary:
@@ -89,7 +91,7 @@ def filterRestaurants(restaurants, trip_coord):
 		else:
 			initial_rests.append([rest, rest_score])	
 	
-	filtered_set = sorted(initial_rests, key = lambda pair: pair[1], reverse = True)
+	filtered_set = sorted(initial_rests, key = lambda pair: pair[1])
 	
 	#filter down to top 50 by getDistanceScore
 	if(len(filtered_set) > 50):
@@ -107,7 +109,7 @@ def finalTen(filtered_set, trip):
 			continue			# do not include address unrecognized by GoogleMaps API
 	
 		star_score = getStarScore(elem[0])
-		rest_score = 0.4*time_score + 0.6*star_score
+		rest_score = 0.6*time_score + 0.4*star_score
 		filtered_copy.append([elem[0], rest_score])
 	
 	final_ten = sorted(filtered_copy, key = lambda pair: pair[1], reverse = True)
