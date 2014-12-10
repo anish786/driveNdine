@@ -1,13 +1,27 @@
-#!/usr/bin/python
+#!/usr/local/bin/python
 
 import cgi, Cookie, os
+
+form = cgi.FieldStorage()
+source = form.getvalue('sourceAddress')
+dest = form.getvalue('destAddress')
+source_lat = form.getvalue('sourceLat')
+source_long = form.getvalue('sourceLong')
+dest_lat = form.getvalue('destLat')
+dest_long  = form.getvalue('destLong')
+rest_address = form.getvalue('restAddress')
+rest1 = form.getvalue('rest1') 
+
+execfile('../p2.py')
+execfile('../p3.py')
+
+rest_coord = addressToCoordinates(rest_address)
 
 print "Content-type:text/html\r\n\r\n"
 print"<html>"
 
 print"<head>"
 print"<title>Directions</title>"
-
 
 print "<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js\"></script>"
 print "<script type=\"text/javascript\" src=\"http://maps.google.com/maps/api/js?sensor=true\"></script>"
@@ -41,6 +55,7 @@ print"width: 96%;"
 print"margin-left: 2%;"
 print"padding-bottom: 10px;"
 print"padding-top: 10px;"
+print"overflow: auto;"
 print"}"
 
 print"body {"
@@ -79,19 +94,19 @@ print"background-image: linear-gradient(to bottom, #F2F280, ##E6E600);filter:pro
 print"}"
 	
 print"</style>"
-	
+
 print"<script type=\"text/javascript\">"
 print"var map;"
 print"$(document).ready(function(){"
 print"map = new GMaps({"
 print"el: '#map',"
-print"lat: -12.043333,"
-print"lng: -77.028333"
+print"lat: %s," % source_lat
+print"lng: %s" % source_long
 print"});"
 			
 print"map.travelRoute({"
-print"origin: [-12.044012922866312, -77.02470665341184],"
-print"destination: [-12.090814532191756, -77.02271108990476],"
+print"origin: [%s, %s]," %(source_lat, source_long)
+print"destination: [%s, %s]," %(rest_coord[0], rest_coord[1])
 print"travelMode: 'driving',"
 print"step: function(e){"
 print"$('#instructions').append('<li>'+e.instructions+'</li>');"
@@ -105,25 +120,53 @@ print"});"
 print"});"
 print"}"
 print"});"
-			
-print"map.addMarker({"
-print"lat: -12.044012922866312,"
-print"lng: -77.02470665341184,"
-print"title: 'Marker with InfoWindow',"
-print"infoWindow: {"
-print"content: '<p>Source</p>'"
+
+print"map.travelRoute({"
+print"origin: [%s, %s]," %(rest_coord[0], rest_coord[1])
+print"destination: [%s, %s]," %(dest_lat, dest_long)
+print"travelMode: 'driving',"
+print"step: function(e){"
+print"$('#instructions').append('<li>'+e.instructions+'</li>');"
+print"$('#instructions li:eq('+e.step_number+')').delay(450*e.step_number).fadeIn(200, function(){"
+print"map.drawPolyline({"
+print"path: e.path,"
+print"strokeColor: '#131540',"
+print"strokeOpacity: 0.6,"
+print"strokeWeight: 6"
+print"});"
+print"});"
 print"}"
 print"});"
-			
+	
 print"map.addMarker({"
-print"lat: -12.090814532191756,"
-print"lng: -77.02271108990476,"
+print"lat: %s," % source_lat
+print"lng: %s," % source_long
 print"title: 'Marker with InfoWindow',"
 print"infoWindow: {"
-print"content: '<p>Destination</p>'"
+print"content: '<p>%s</p>'" % source
+print"}"
+print"});"
+
+	
+print"map.addMarker({"
+print"lat: %s," % rest_coord[0]
+print"lng: %s," % rest_coord[1]
+print"title: 'Marker with InfoWindow',"
+print"infoWindow: {"
+print"content: '<p>%s</p>'" % rest1
+print"}"
+print"});"
+
+print"map.addMarker({"
+print"lat: %s," % dest_lat
+print"lng: %s," % dest_long
+print"title: 'Marker with InfoWindow',"
+print"infoWindow: {"
+print"content: '<p>%s</p>'" % dest
 print"}"
 print"});"
 print"});"
+
 print"</script>"
 print"</head>"
 
@@ -132,6 +175,8 @@ print"<div class=\"row\">"
 print"<div class=\"span11\">"
 print"<div id=\"map\"></div>"
 print"<ul id=\"instructions\">"
+print"</ul>"
+print"<ul id=\"instructions2\">"
 print"</ul>"
 print"</div>"
 print"</div>"

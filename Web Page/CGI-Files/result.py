@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/bin/python
 
 import cgi, Cookie, os, subprocess
 
@@ -6,7 +6,13 @@ form = cgi.FieldStorage()
 source = form.getvalue('from')
 dest = form.getvalue('to')
 
-execfile("../test.py")
+execfile('../p2.py')
+execfile('../p3.py')
+
+src_coord = addressToCoordinates(source)
+dest_coord = addressToCoordinates(dest)
+
+recommended = run(source, dest)
 
 print "Content-type:text/html\r\n\r\n"
 print "<html>"
@@ -130,18 +136,18 @@ print "}"
 	
 print "</style>"
 print "<script>"
-	
+
 print "var map;"
 print "$(document).ready(function(){"
 print "map = new GMaps({"
 print "el: '#map',"
-print "lat: -12.043333,"
-print "lng: -77.028333"
+print "lat: %s," %str(src_coord[0])
+print "lng: %s" %str(src_coord[1])
 print "});"
 	
 print "map.addMarker({"
-print "lat: -12.044012922866312,"
-print "lng: -77.02470665341184,"
+print "lat: %s," %str(src_coord[0])  
+print "lng: %s," %str(src_coord[1])
 print "title: 'Marker with InfoWindow',"
 print "infoWindow: {"
 print "content: '<p>Source</p>'"
@@ -149,25 +155,114 @@ print "}"
 print "});"
 		
 print "map.addMarker({"
-print "lat: -12.090814532191756,"
-print "lng: -77.02271108990476,"
+print "lat: %s," % str(dest_coord[0])
+print "lng: %s," %str(dest_coord[1])
 print "title: 'Marker with InfoWindow',"
 print "infoWindow: {"
 print "content: '<p>Destination</p>'"
 print "}"
 print "});"
-		
-		
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[0][0]['latitude'])
+print "lng: %s," % str(recommended[0][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#1</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[1][0]['latitude'])
+print "lng: %s," % str(recommended[1][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#2</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[2][0]['latitude'])
+print "lng: %s," % str(recommended[2][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#3</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[3][0]['latitude'])
+print "lng: %s," % str(recommended[3][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#4</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[4][0]['latitude'])
+print "lng: %s," % str(recommended[4][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#5</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[5][0]['latitude'])
+print "lng: %s," % str(recommended[5][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#6</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[6][0]['latitude'])
+print "lng: %s," % str(recommended[6][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#7</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[7][0]['latitude'])
+print "lng: %s," % str(recommended[7][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#8</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[8][0]['latitude'])
+print "lng: %s," % str(recommended[8][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#9</p>'"
+print "}"
+print "});"
+
+print "map.addMarker({"
+print "lat: %s," % str(recommended[9][0]['latitude'])
+print "lng: %s," % str(recommended[9][0]['longitude'])
+print "title: 'Marker with InfoWindow',"
+print "infoWindow: {"
+print "content: '<p>#10</p>'"
+print "}"
+print "});"
+
 print "map.drawRoute({"
-print "origin: [-12.044012922866312, -77.02470665341184],"
-print "destination: [-12.090814532191756, -77.02271108990476],"
+print "origin: [%s, %s]," % (str(src_coord[0]), str(src_coord[1]))
+print "destination: [%s, %s]," % (str(dest_coord[0]), str(dest_coord[1]))
 print "travelMode: 'driving',"
 print "strokeColor: '#131540',"
 print "strokeOpacity: 0.6,"
 print "strokeWeight: 6"
 print "});"
 print "});"
-		
+
 print "</script>"
 	
 print "</head>"
@@ -179,135 +274,214 @@ print "<div id='map'></div>"
 print "<div id=\"results\">"
 
 print "<div class='textStuff'>"
-print "<p id='results1'> 1. This path goes from %s to %s </p>" % (source, dest)
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
+print "<p id='results1'> This path goes from %s to %s </p>" % (source, dest)
+print "<p id='results2'> 1. %s </p>" %recommended[0][0]['name'] 
 print "</div>"
 print "<div class='buttons'>"
 print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
-print "<input class='submit_button' type='submit' value='Eat Here!'>"
-print "</form>"
-print "</div>"
-print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[0][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[0][0]['full_address']
 
-print "<p id='results1'> 2. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
-print "</div>"
-print "<div class='buttons'>"
-print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
 print "<input class='submit_button' type='submit' value='Eat Here!'>"
 print "</form>"
 print "</div>"
 print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
-	
-print "<p id='results1'> 3. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
-print "</div>"
-print "<div class='buttons'>"
-print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
-print "<input class='submit_button' type='submit' value='Eat Here!'>"
-print "</form>"
-print "</div>"
-print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
-	
-print "<p id='results1'> 4. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
-print "</div>"
-print "<div class='buttons'>"
-print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
-print "<input class='submit_button' type='submit' value='Eat Here!'>"
-print "</form>"
-print "</div>"
-print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
-	
-print "<p id='results1'> 5. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
-print "</div>"
-print "<div class='buttons'>"
-print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
-print "<input class='submit_button' type='submit' value='Eat Here!'>"
-print "</form>"
-print "</div>"
-print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
-	
-print "<p id='results1'> 6. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
-print "</div>"
-print "<div class='buttons'>"
-print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
-print "<input class='submit_button' type='submit' value='Eat Here!'>"
-print "</form>"
-print "</div>"
-print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
-	
-print "<p id='results1'> 7. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
-print "</div>"
-print "<div class='buttons'>"
-print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
-print "<input class='submit_button' type='submit' value='Eat Here!'>"
-print "</form>"
-print "</div>"
-print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
-	
-print "<p id='results1'> 8. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
-print "</div>"
-print "<div class='buttons'>"
-print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
-print "<input class='submit_button' type='submit' value='Eat Here!'>"
-print "</form>"
-print "</div>"
-print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
+print "<p id='results2'> %s </p>" % recommended[0][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[0][0]['stars'])
 
-print "<p id='results1'> 9. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
-print "</div>"
-print "<div class='buttons'>"
-print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
-print "<input class='submit_button' type='submit' value='Eat Here!'>"
-print "</form>"
-print "</div>"
-print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
 
-print "<p id='results1'> 10. This should be the first ranked restaurant on this line right here. </p>"
-print "<p id='results2'> On this line we would put the address of the restaurant </p>"
+print "<p id='results2'> 2.  %s </p>" %recommended[1][0]['name'] 
 print "</div>"
 print "<div class='buttons'>"
 print "<form action='/cgi-bin/third.py' method='post'> "
-print "<input name='destination' class='hidden' type='text' value='This should be the first ranked restaurant on this line'>"
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[1][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[1][0]['full_address']
+
 print "<input class='submit_button' type='submit' value='Eat Here!'>"
 print "</form>"
 print "</div>"
 print "<div class='textStuff'>"
-print "<p id='results2'> On this line we would put the additional time needed to drive here. </p>"
-print "<p id='results3'> On this line we would put the yelp rating.</p>"
+print "<p id='results2'> %s </p>" % recommended[1][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[1][0]['stars'])
+	
+print "<p id='results2'> 3. %s </p>" %recommended[2][0]['name'] 
+print "</div>"
+print "<div class='buttons'>"
+print "<form action='/cgi-bin/third.py' method='post'> "
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[2][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[2][0]['full_address']
+
+print "<input class='submit_button' type='submit' value='Eat Here!'>"
+print "</form>"
+print "</div>"
+print "<div class='textStuff'>"
+print "<p id='results2'> %s </p>" % recommended[2][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[2][0]['stars'])
+	
+print "<p id='results2'> 4. %s </p>" %recommended[3][0]['name'] 
+print "</div>"
+print "<div class='buttons'>"
+print "<form action='/cgi-bin/third.py' method='post'> "
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[3][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[3][0]['full_address']
+
+
+print "<input class='submit_button' type='submit' value='Eat Here!'>"
+print "</form>"
+print "</div>"
+print "<div class='textStuff'>"
+print "<p id='results2'> %s </p>" % recommended[3][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[3][0]['stars'])
+	
+print "<p id='results2'> 5. %s </p>" %recommended[4][0]['name'] 
+print "</div>"
+print "<div class='buttons'>"
+print "<form action='/cgi-bin/third.py' method='post'> "
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[4][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[4][0]['full_address']
+
+
+print "<input class='submit_button' type='submit' value='Eat Here!'>"
+print "</form>"
+print "</div>"
+print "<div class='textStuff'>"
+print "<p id='results2'> %s </p>" % recommended[4][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[4][0]['stars'])
+	
+print "<p id='results2'> 6. %s </p>" %recommended[5][0]['name'] 
+print "</div>"
+print "<div class='buttons'>"
+print "<form action='/cgi-bin/third.py' method='post'> "
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[5][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[5][0]['full_address']
+
+
+print "<input class='submit_button' type='submit' value='Eat Here!'>"
+print "</form>"
+print "</div>"
+print "<div class='textStuff'>"
+print "<p id='results2'> %s </p>" % recommended[5][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[5][0]['stars'])
+	
+print "<p id='results2'> 7 %s </p>" %recommended[6][0]['name'] 
+print "</div>"
+print "<div class='buttons'>"
+print "<form action='/cgi-bin/third.py' method='post'> "
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[6][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[6][0]['full_address']
+
+
+print "<input class='submit_button' type='submit' value='Eat Here!'>"
+print "</form>"
+print "</div>"
+print "<div class='textStuff'>"
+print "<p id='results2'> %s </p>" % recommended[6][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[6][0]['stars'])
+	
+print "<p id='results2'> 8. %s </p>" %recommended[7][0]['name'] 
+print "</div>"
+print "<div class='buttons'>"
+print "<form action='/cgi-bin/third.py' method='post'> "
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[7][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[7][0]['full_address']
+
+
+print "<input class='submit_button' type='submit' value='Eat Here!'>"
+print "</form>"
+print "</div>"
+print "<div class='textStuff'>"
+print "<p id='results2'> %s </p>" % recommended[7][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[7][0]['stars'])
+
+print "<p id='results2'> 9. %s </p>" %recommended[8][0]['name'] 
+print "</div>"
+print "<div class='buttons'>"
+print "<form action='/cgi-bin/third.py' method='post'> "
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[8][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[8][0]['full_address']
+
+
+print "<input class='submit_button' type='submit' value='Eat Here!'>"
+print "</form>"
+print "</div>"
+print "<div class='textStuff'>"
+print "<p id='results2'> %s </p>" % recommended[8][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[8][0]['stars'])
+
+print "<p id='results2'> 10. %s </p>" %recommended[9][0]['name'] 
+print "</div>"
+print "<div class='buttons'>"
+print "<form action='/cgi-bin/third.py' method='post'> "
+print "<input name='sourceAddress' class='hidden' type='text' value='%s'>" % source
+print "<input name='destAddress' class='hidden' type='text' value='%s'>" % dest
+print "<input name='rest1' class='hidden' type='text' value='%s'>" % recommended[9][0]['name']
+print "<input name='sourceLat' class='hidden' type='text' value='%s'>" % (str(src_coord[0]))
+print "<input name='sourceLong' class='hidden' type='text' value='%s'>" % (str(src_coord[1]))
+print "<input name='destLat' class='hidden' type='text' value='%s'>" % (str(dest_coord[0]))
+print "<input name='destLong' class='hidden' type='text' value='%s'>" % (str(dest_coord[1]))
+print "<input name='restAddress' class='hidden' type='text' value='%s'>" % recommended[9][0]['full_address']
+
+
+print "<input class='submit_button' type='submit' value='Eat Here!'>"
+print "</form>"
+print "</div>"
+print "<div class='textStuff'>"
+print "<p id='results2'> %s </p>" % recommended[9][0]['full_address']
+print "<p id='results3'> Yelp Rating: %s/5.0 .</p>"  % str(recommended[9][0]['stars'])
 
 print "</div>"
 

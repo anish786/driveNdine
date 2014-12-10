@@ -30,6 +30,9 @@ have to correctly place all the python code and other various files in the
 correct directories with the correct permissions. This information can all
 be found online.
 
+The webpage html files that you can find in the webpage folder are the 
+basic templates we used to make our CGI files. 
+
 For our python we used python 2.7.8. 
 
 If you have any questions feel free to email DriveNDine@gmail.com.

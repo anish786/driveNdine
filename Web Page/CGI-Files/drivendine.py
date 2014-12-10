@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/bin/python
 
 import cgi, Cookie, os
 
@@ -47,7 +47,7 @@ print "<style> "
 
 print "@font-face {"
 print "font-family: Turtles;"
-print "src: url(Turtles.woff);"
+print "src: url(../Turtles.woff);"
 print "}"
 
 print ".options{"
@@ -83,7 +83,7 @@ print 	"overflow: auto;"
 print "}"
 
 print "body {"
-print     "background-image: url(\"../Road.jpg\");"
+print     "background-image: url('../Road.jpg');"
 print     "background-color: #000000;"
 print 	"color: white;"
 print "}"
